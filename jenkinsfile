@@ -18,10 +18,27 @@ pipeline {
         sh 'mvn test'
       }
     }
-		stage('Code packing'){
+	stage('Code packing'){
       steps{
         sh 'mvn package'
       }
     }
+	stage('Build docker image'){
+		steps{
+			sh 'cp /var/lib/jenkins/workspace/$JOB_NAME/target/*.war /var/lib/jenkins/workspace/$JOB_NAME'
+			sh 'docker build -t marekczajkowski992/abctech:$BUILD_NUMBER .'
+            }
+    }
+	stage ('Push Docker Image'){
+		steps{
+			withDockerRegistry (( credentialsId: "mydockerhubcred", url: ])
+			sh 'docker push marekczajkowski992/abctech:$BUILD_NUMBER'
+		}
+    }
+	stage ('Deploy to container'){
+		steps{
+			sh 'docker run -itd -P marekczajkowski992/abctech:$BUILD_NUMBER'
+		}
+	}
   }
 }
