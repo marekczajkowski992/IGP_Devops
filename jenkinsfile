@@ -43,7 +43,6 @@ pipeline {
 	}
 	stage('Deploy to k8s'){
 		steps{
-			aws eks update-kubeconfig --region eu-north-1 --name IGP-cluster1
 			sh 'kubectl apply -f pod.yaml'
 			sh 'kubectl apply -f svc.yaml'
 		}
