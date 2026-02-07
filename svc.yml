@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Services
+metadata:
+  name: abctech-svc
+  namespace: abctech-ns
+spec:
+  selector:
+    app: abctech
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: NodePort
