@@ -41,5 +41,10 @@ pipeline {
 			sh 'docker run -itd -P marekczajkowski992/abctech:$BUILD_NUMBER'
 		}
 	}
+	stage('Deploy to k8s'){
+		steps{
+			sh 'kubectl apply -f k8s-jenkins-manifest.yml'
+		}
+    }
   }
 }
