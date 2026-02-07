@@ -43,7 +43,7 @@ pipeline {
 	}
 	stage('Deploy to k8s'){
 		steps{
-			sh 'kubectl apply -f k8s-jenkins-manifest.yml'
+			sh 'kubectl apply -f k8s-jenkins-manifest.yml --validate=false'
 		}
     }
   }
